@@ -1,3 +1,6 @@
+const User = require('../models/user');
+const {Sequelize} = require('sequelize');
+
 class UserController{
     getUser(id){
         return{

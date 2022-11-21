@@ -1,31 +1,33 @@
 const express = require("express");
 const router = express.Router();
+const ProductController = require('../controllers/ProductController');
+
+productCtrl = new ProductController();
 
 router.get ("/", async (req, res) => {
-    res.send("Olá mundo!!!")
+    let result = await productCtrl.getProducts(req.query);
+    res.send({result})
 });
 
 router.get ("/:id", async (req, res) => {
-    const result = userCtrl.getUsers();
-    res.send(result);
+    let result = await productCtrl.getProduct(req.params.id);
+    res.send({result})
 });
 
-//Cria um produto
-// router.get ("/", async (req, res) => {
-//     const result = userCtrl.getUsers();
-//     res.send(result);
-// });
+router.post ("/:id", async (req, res) => {
+    res.send({})
+});
 
-//Edita um produto
-// router.get ("/:id", async (req, res) => {
-//     const result = userCtrl.getUsers();
-//     res.send(result);
-// });
+router.put ("/:id", async (req, res) => {
+    res.send({})
+});
 
-//Deleta um produto
-// router.get ("/:id", async (req, res) => {
-//     const result = userCtrl.getUsers();
-//     res.send(result);
-// });
+router.patch ("/:id", async (req, res) => {
+    res.send({})
+});
+
+router.delete ("/:id", async (req, res) => {
+    res.send({})
+});
 
 module.exports = router;
