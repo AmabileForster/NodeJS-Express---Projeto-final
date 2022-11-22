@@ -1,33 +1,56 @@
 const express = require("express");
 const router = express.Router();
+
+const Jwt = require("../utils/Jwt");
 const ProductController = require('../controllers/ProductController');
 
-productCtrl = new ProductController();
+const productCtrl = new ProductController();
+const jwt = new Jwt();
 
-router.get ("/", async (req, res) => {
-    let result = await productCtrl.getProducts(req.query);
-    res.send({result})
+router.get("/", async (req, res) => {
+  let result = jwt.verifyToken(req.headers.authorization);
+  if(result.status === 200){
+    result = await productCtrl.getProducts(req.query);
+  }
+
+  res.statusCode = result.status;
+  res.send(result.result);
 });
 
-router.get ("/:id", async (req, res) => {
-    let result = await productCtrl.getProduct(req.params.id);
-    res.send({result})
+router.get("/:id", async (req, res) => {
+  let result = jwt.verifyToken(req.headers.authorization);
+  if(result.status === 200){
+    result = await productCtrl.getProduct(req.params.id);
+  }
+  res.statusCode = result.status;
+  res.send(result.result);
 });
 
-router.post ("/:id", async (req, res) => {
-    res.send({})
+router.post("/", async (req, res) => {
+  let result = jwt.verifyToken(req.headers.authorization);
+  if(result.status === 200){
+    result = await productCtrl.createProduct(req.body);
+  }
+  res.statusCode = result.status;
+  res.send(result.result);
 });
 
-router.put ("/:id", async (req, res) => {
-    res.send({})
+router.patch("/:id", async (req, res) => {
+  let result = jwt.verifyToken(req.headers.authorization);
+  if(result.status === 200){
+    result = await productCtrl.updateProduct(req.params.id, req.body);
+  }
+  res.statusCode = result.status;
+  res.send(result.result);
 });
 
-router.patch ("/:id", async (req, res) => {
-    res.send({})
-});
-
-router.delete ("/:id", async (req, res) => {
-    res.send({})
+router.delete("/:id", async (req, res) => {
+  let result = jwt.verifyToken(req.headers.authorization);
+  if(result.status === 200){
+    result = await productCtrl.deleteProduct(req.params.id, {});
+  }
+  res.statusCode = result.status;
+  res.send(result.result);
 });
 
 module.exports = router;

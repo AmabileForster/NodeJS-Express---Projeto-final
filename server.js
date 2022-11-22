@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = 3000;
 const db = require('./db.js');
 
 require("dotenv").config();
@@ -12,15 +11,13 @@ const auth = require('./routes/auth');
 const product = require('./routes/product');
 const category = require('./routes/category');
 
-db.sync(() => console.log("db rodando!!!!!"));
-
 app.use('/user', user);
 app.use('/auth', auth);
 app.use('/product', product);
 app.use('/category', category);
 
-db.sync(() => console.log("Banco de dados rodando!!"))
+db.sync(() => console.log("Banco de dados rodando!!!!!"))
 
-app.listen(port, function(){
+app.listen(process.env.PORT, function(){
     console.log("Aplicação rodando.")
 });
